@@ -1,13 +1,11 @@
 import "./style.css";
 
 import { cx0, cy0, r0, multiplicatorFactor, samples, svgns } from "./constants";
+import { querySelector } from "./misc";
 
 console.log("hello world");
 
-const gSamplesElements = document.querySelector("svg g.samples");
-if (gSamplesElements === null) {
-  throw new Error("Cannot find selector svg g.samples");
-}
+const gSamplesElements = querySelector("svg g.samples");
 
 for (let i = 0; i < samples; i++) {
   const angle = (i * 2 * Math.PI) / samples;
@@ -22,10 +20,7 @@ for (let i = 0; i < samples; i++) {
   gSamplesElements.appendChild(circle);
 }
 
-const gLineElement = document.querySelector("svg g.lines");
-if (gLineElement === null) {
-  throw new Error("Cannot find selector svg g.lines");
-}
+const gLineElement = querySelector("svg g.lines");
 
 for (let i = 0; i < samples; i++) {
   const angle1 = (i * 2 * Math.PI) / samples;
