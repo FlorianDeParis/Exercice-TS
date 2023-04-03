@@ -1,40 +1,12 @@
 import "./style.css";
+import { Board } from "./Board";
+import { Config } from "./interfaces/Config";
 
-import { cx0, cy0, r0, multiplicatorFactor, samples, svgns } from "./constants";
-import { querySelector } from "./misc";
-import { getAngleFromIndex, getCoordinates } from "./math";
-
-const gSamplesElements = querySelector("svg g.samples");
-
-for (let i = 0; i < samples; i++) {
-  // Get angle in radian
-  const angle = getAngleFromIndex(i, samples);
-
-  const point = getCoordinates(angle);
-  const r = 1;
-
-  const circle = document.createElementNS(svgns, "circle");
-  circle.setAttributeNS(null, "cx", point.x.toString());
-  circle.setAttributeNS(null, "cy", point.y.toString());
-  circle.setAttributeNS(null, "r", r.toString());
-  gSamplesElements.appendChild(circle);
-}
-
-const gLineElement = querySelector("svg g.lines");
-
-for (let i = 0; i < samples; i++) {
-  const angle1 = (i * 2 * Math.PI) / samples;
-  const angle2 = angle1 * multiplicatorFactor;
-
-  const x1 = cx0 + r0 * Math.cos(angle1);
-  const y1 = cy0 + r0 * Math.sin(angle1);
-  const x2 = cx0 + r0 * Math.cos(angle2);
-  const y2 = cy0 + r0 * Math.sin(angle2);
-
-  const line = document.createElementNS(svgns, "line");
-  line.setAttributeNS(null, "x1", x1.toString());
-  line.setAttributeNS(null, "y1", y1.toString());
-  line.setAttributeNS(null, "x2", x2.toString());
-  line.setAttributeNS(null, "y2", y2.toString());
-  gLineElement.appendChild(line);
-}
+const board = new Board();
+const config: Config = {
+  samples: 10,
+  multiplicatorFactor: 4,
+};
+board.setConfig(config);
+board.clear();
+board.draw();

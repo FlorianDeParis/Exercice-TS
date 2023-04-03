@@ -1,8 +1,8 @@
-export const cx0 = 50;
-export const cy0 = 50;
-export const r0 = 45;
+import { Circle } from "./interfaces/Circle";
 
-export const multiplicatorFactor = 2;
-export const samples = 10;
+export const bigCircle: Circle = {
+  center: { x: 50, y: 50 },
+  radius: 45,
+};
 
-export const svgns = "http://www.w3.org/2000/svg";
+export const SVGNS = "http://www.w3.org/2000/svg";
