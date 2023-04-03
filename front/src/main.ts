@@ -2,20 +2,20 @@ import "./style.css";
 
 import { cx0, cy0, r0, multiplicatorFactor, samples, svgns } from "./constants";
 import { querySelector } from "./misc";
-
-console.log("hello world");
+import { getAngleFromIndex, getCoordinates } from "./math";
 
 const gSamplesElements = querySelector("svg g.samples");
 
 for (let i = 0; i < samples; i++) {
-  const angle = (i * 2 * Math.PI) / samples;
-  const cx = cx0 + r0 * Math.cos(angle);
-  const cy = cy0 + r0 * Math.sin(angle);
+  // Get angle in radian
+  const angle = getAngleFromIndex(i, samples);
+
+  const point = getCoordinates(angle);
   const r = 1;
 
   const circle = document.createElementNS(svgns, "circle");
-  circle.setAttributeNS(null, "cx", cx.toString());
-  circle.setAttributeNS(null, "cy", cy.toString());
+  circle.setAttributeNS(null, "cx", point.x.toString());
+  circle.setAttributeNS(null, "cy", point.y.toString());
   circle.setAttributeNS(null, "r", r.toString());
   gSamplesElements.appendChild(circle);
 }
