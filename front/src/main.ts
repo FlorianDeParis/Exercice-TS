@@ -1,15 +1,14 @@
-"use strict";
+import {
+  cx0,
+  cy0,
+  r0,
+  multiplicatorFactor,
+  samples,
+  svgns,
+} from "./constants.js";
+
 console.log("hello world");
 
-const cx0 = 50;
-const cy0 = 50;
-const r0 = 45;
-
-const multiplicatorFactor = 2;
-
-const samples = 10;
-
-const svgns = "http://www.w3.org/2000/svg";
 const gSamplesElements = document.querySelector("svg g.samples");
 if (gSamplesElements === null) {
   throw new Error("Cannot find selector svg g.samples");
