@@ -1,6 +1,6 @@
 import { SVGNS } from "./constants";
 import { Config } from "./interfaces/Config";
-import { querySelector, setAttribute } from "./misc";
+import { $, setAttribute } from "./misc";
 import { getAngleFromIndex, getCoordinates } from "./math";
 
 export class Board {
@@ -10,8 +10,8 @@ export class Board {
   };
 
   clear() {
-    querySelector("svg g.samples").innerHTML = "";
-    querySelector("svg g.lines").innerHTML = "";
+    $("svg g.samples").innerHTML = "";
+    $("svg g.lines").innerHTML = "";
   }
 
   draw() {
@@ -20,7 +20,7 @@ export class Board {
   }
 
   drawLines() {
-    const gLineElement = querySelector("svg g.lines");
+    const gLineElement = $("svg g.lines");
 
     for (let i = 0; i < this.#config.samples; i++) {
       const angle1 = (i * 2 * Math.PI) / this.#config.samples;
@@ -39,7 +39,7 @@ export class Board {
   }
 
   drawSamples() {
-    const gSamplesElements = querySelector("svg g.samples");
+    const gSamplesElements = $("svg g.samples");
 
     for (let i = 0; i < this.#config.samples; i++) {
       // Get angle in radian

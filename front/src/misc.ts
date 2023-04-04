@@ -1,4 +1,4 @@
-export const querySelector = <T extends Element>(
+export const $ = <T extends Element>(
   cssSelector: string,
   type?: new () => T
 ): T => {
@@ -24,4 +24,10 @@ export const setAttribute = (
 
 export const getKeys = <T extends object>(object: T) => {
   return Object.keys(object) as (keyof T)[];
+};
+
+export const sleep = (delay: number) => {
+  return new Promise((resolve) => {
+    setTimeout(resolve, delay);
+  });
 };

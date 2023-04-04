@@ -1,7 +1,9 @@
 import { Config } from "./interfaces/Config";
-import { getKeys, querySelector } from "./misc";
+import { getKeys, $, sleep } from "./misc";
 
 type onChangeCallback = (newConfig: Config) => void;
+
+const step = 0.01;
 
 export class Command {
   callback: onChangeCallback = () => {};
@@ -9,6 +11,7 @@ export class Command {
     multiplicatorFactor: 0,
     samples: 0,
   };
+  isPlaying = false;
 
   constructor() {
     this.setAction();
@@ -17,10 +20,7 @@ export class Command {
   setAction() {
     const keys = getKeys(this.config);
     for (const key of keys) {
-      const sliderElement = querySelector(
-        `div.command .${key} input`,
-        HTMLInputElement
-      );
+      const sliderElement = $(`div.command .${key} input`, HTMLInputElement);
 
       sliderElement.addEventListener("input", () => {
         const newValue = Number(sliderElement.value);
@@ -28,6 +28,25 @@ export class Command {
         this.render();
         this.callback(this.config);
       });
+    }
+
+    const buttonElt = $("div.command button");
+    buttonElt.addEventListener("click", () => {
+      this.isPlaying = !this.isPlaying;
+      this.render();
+      if (this.isPlaying) {
+        this.play();
+      }
+    });
+  }
+  async play() {
+    while (this.isPlaying) {
+      await sleep(500);
+      let mf = this.config.multiplicatorFactor;
+      mf = +((mf + step) % 100).toFixed(2);
+      this.config.multiplicatorFactor = mf;
+      this.render();
+      this.callback(this.config);
     }
   }
 
@@ -43,14 +62,14 @@ export class Command {
   render() {
     const keys = getKeys(this.config);
     for (const key of keys) {
-      const valueElement = querySelector(`div.command .${key} .value`);
+      const valueElement = $(`div.command .${key} .value`);
       valueElement.innerHTML = this.config[key] + "";
 
-      const sliderElement = querySelector(
-        `div.command .${key} input`,
-        HTMLInputElement
-      );
+      const sliderElement = $(`div.command .${key} input`, HTMLInputElement);
       sliderElement.value = this.config[key] + "";
     }
+
+    const buttonElt = $("div.command button");
+    buttonElt.innerHTML = this.isPlaying ? "Arrêter" : "Démarrer";
   }
 }
