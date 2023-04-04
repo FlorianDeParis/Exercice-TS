@@ -44,7 +44,15 @@ export class Command {
     buttonRandomElt.addEventListener("click", () => {
       console.log("click random");
       (async () => {
-        const response = await fetch(url);
+        try {
+          const response = await fetch(url);
+          const config: Config = await response.json();
+          this.config = config;
+          this.render();
+          this.callback(this.config);
+        } catch (err) {
+          console.log("err : ", err);
+        }
       })();
     });
   }
