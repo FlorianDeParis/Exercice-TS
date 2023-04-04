@@ -28,6 +28,11 @@ export class Command {
     for (const key of keys) {
       const valueElement = querySelector(`div.command .${key} .value`);
       valueElement.innerHTML = this.config[key] + "";
+
+      const sliderElement = querySelector(
+        `div.command .${key} input`
+      ) as HTMLInputElement;
+      sliderElement.value = this.config[key] + "";
     }
   }
 }
