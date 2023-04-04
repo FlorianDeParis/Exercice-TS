@@ -1,10 +1,14 @@
 import express from "express";
 const app = express.Router();
 
+const rand = (min: number, max: number) => {
+  return Math.floor(Math.random() * (max - min)) + min;
+};
+
 app.get("/config", (req, res) => {
   res.json({
-    samples: 43,
-    multiplicatorFactor: 12,
+    samples: rand(0, 100),
+    multiplicatorFactor: rand(0, 100),
   });
 });
 
