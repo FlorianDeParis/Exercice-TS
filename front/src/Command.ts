@@ -1,5 +1,5 @@
 import { Config } from "./interfaces/Config";
-import { querySelector } from "./misc";
+import { getKeys, querySelector } from "./misc";
 
 type onChangeCallback = (newConfig: Config) => void;
 
@@ -11,7 +11,24 @@ export class Command {
   };
 
   constructor() {
+    this.setAction();
     this.render();
+  }
+  setAction() {
+    const keys = getKeys(this.config);
+    for (const key of keys) {
+      const sliderElement = querySelector(
+        `div.command .${key} input`,
+        HTMLInputElement
+      );
+
+      sliderElement.addEventListener("input", () => {
+        const newValue = Number(sliderElement.value);
+        this.config[key] = newValue;
+        this.render();
+        this.callback(this.config);
+      });
+    }
   }
 
   onChange(callback: onChangeCallback) {
@@ -24,14 +41,15 @@ export class Command {
   }
 
   render() {
-    const keys = Object.keys(this.config) as (keyof Config)[];
+    const keys = getKeys(this.config);
     for (const key of keys) {
       const valueElement = querySelector(`div.command .${key} .value`);
       valueElement.innerHTML = this.config[key] + "";
 
       const sliderElement = querySelector(
-        `div.command .${key} input`
-      ) as HTMLInputElement;
+        `div.command .${key} input`,
+        HTMLInputElement
+      );
       sliderElement.value = this.config[key] + "";
     }
   }
