@@ -1,3 +1,4 @@
+import { url } from "./constants";
 import { Config } from "./interfaces/Config";
 import { getKeys, $, sleep } from "./misc";
 
@@ -42,6 +43,9 @@ export class Command {
     const buttonRandomElt = $("div.command button.random");
     buttonRandomElt.addEventListener("click", () => {
       console.log("click random");
+      (async () => {
+        const response = await fetch(url);
+      })();
     });
   }
   async play() {
