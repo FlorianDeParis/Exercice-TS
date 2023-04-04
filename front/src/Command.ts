@@ -30,13 +30,18 @@ export class Command {
       });
     }
 
-    const buttonElt = $("div.command button");
+    const buttonElt = $("div.command button.play");
     buttonElt.addEventListener("click", () => {
       this.isPlaying = !this.isPlaying;
       this.render();
       if (this.isPlaying) {
         this.play();
       }
+    });
+
+    const buttonRandomElt = $("div.command button.random");
+    buttonRandomElt.addEventListener("click", () => {
+      console.log("click random");
     });
   }
   async play() {
@@ -69,7 +74,7 @@ export class Command {
       sliderElement.value = this.config[key] + "";
     }
 
-    const buttonElt = $("div.command button");
+    const buttonElt = $("div.command button.play");
     buttonElt.innerHTML = this.isPlaying ? "Arrêter" : "Démarrer";
   }
 }
